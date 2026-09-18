@@ -140,6 +140,13 @@
 
 #define DDNG_FRAMEWORK
 
+#include <RE/S/SendHUDMessage.h>
+namespace RE {
+    inline void DebugNotification(const char* a_notification, const char* a_soundToPlay = nullptr, bool a_cancelIfAlreadyQueued = true) {
+        SendHUDMessage::ShowHUDMessage(a_notification, a_soundToPlay, a_cancelIfAlreadyQueued);
+    }
+}
+
 using namespace std::literals;
 using namespace REL::literals;
 

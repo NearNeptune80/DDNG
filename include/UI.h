@@ -3,6 +3,7 @@
 #include <functional>
 #include <future>
 #include <vector>
+#include <RE/M/MessageBoxMenu.h>
 
 namespace DeviousDevices {
     namespace UI {
@@ -20,7 +21,7 @@ namespace DeviousDevices {
             public:
                 ~MessageBoxResultCallback() override {}
                 MessageBoxResultCallback(std::function<void(unsigned int)> callback) : _callback(callback) {}
-                void Run(RE::IMessageBoxCallback::Message message) override {
+                void Run(std::uint8_t message) override {
                     _callback(static_cast<unsigned int>(message));
                 }
             };
@@ -37,7 +38,7 @@ namespace DeviousDevices {
                 messagebox->callback = messageCallback;
                 messagebox->bodyText = bodyText;
                 for (auto text : buttonTextValues) messagebox->buttonText.push_back(text.c_str());
-                messagebox->QueueMessage();
+                RE::MessageBoxMenu::QueueMessage(messagebox);
             }
 
             static void Show(RE::BGSMessage* msg, std::function<void(unsigned int)> callback) {

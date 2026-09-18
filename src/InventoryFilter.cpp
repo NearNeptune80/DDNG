@@ -109,7 +109,7 @@ bool DeviousDevices::InventoryFilter::EquipFilter(RE::Actor* a_actor, RE::TESBou
     if ((a_item->Is(RE::FormType::Armor) && !LibFunctions::GetSingleton()->IsDevice(a_item->As<RE::TESObjectARMO>())))
     {
         RE::TESObjectARMO* loc_armor = reinterpret_cast<RE::TESObjectARMO*>(a_item);
-        const auto loc_mask = (int)loc_armor->GetSlotMask();
+        const auto loc_mask = (int)loc_armor->GetSlotMask().underlying();
         RE::TESObjectARMO* loc_worn = LibFunctions::GetSingleton()->GetWornArmor(a_actor,loc_mask);
         if (loc_worn && LibFunctions::GetSingleton()->IsDevice(loc_worn))
         {
