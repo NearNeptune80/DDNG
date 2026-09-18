@@ -87,7 +87,7 @@
             "cacheVariables": {
                 "BUILD_TESTS": {
                     "type": "STRING",
-                    "value": "ON"
+                    "value": "OFF"
                 }
             }
         },

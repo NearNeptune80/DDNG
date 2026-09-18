@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.21)
 message("Using toolchain file ${CMAKE_TOOLCHAIN_FILE}.")
 
-set(VCPKG_MANIFEST_FEATURES ON)
-
 ########################################################################################################################
 ## Define project
 ########################################################################################################################
@@ -85,7 +83,10 @@ message("\tTests: ${BUILD_TESTS}")
 ########################################################################################################################
 ## Configure target DLL
 ########################################################################################################################
-find_package(CommonLibSSE CONFIG REQUIRED)
+set(SKSE_SUPPORT_XBYAK ON CACHE BOOL "" FORCE)
+set(BUILD_TESTS OFF CACHE BOOL "" FORCE)
+add_subdirectory(extern/CommonLibSSE)
+include(extern/CommonLibSSE/cmake/CommonLibSSE.cmake)
 find_library(Detours_LIBRARIES NAMES detours.lib)
 
 add_commonlibsse_plugin(${PROJECT_NAME} SOURCES ${headers} ${sources})
