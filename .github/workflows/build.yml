@@ -22,15 +22,18 @@ jobs:
 
     - name: Cache vcpkg packages
       uses: lukka/run-vcpkg@v11
-        
+      with:
+        vcpkgJsonGlob: 'vcpkg.json'
+        vcpkgConfigurationJsonGlob: 'vcpkg-configuration.json'
+        vcpkgGitCommitId: 'ee12231b20c95013c6638d845d04c91559a1d1ff'
+
     - name: Run CMake
       uses: lukka/run-cmake@v10
       with:
         cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
         configurePreset: build-release-msvc
-        configurePresetAdditionalArgs: "['-DCMAKE_TOOLCHAIN_FILE:STRING=C:/vcpkg/scripts/buildsystems/vcpkg.cmake']"
         buildPreset: release-msvc
-    
+
     - name: Upload DLL artifact
       uses: actions/upload-artifact@v4
       with:
