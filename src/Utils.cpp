@@ -11,7 +11,7 @@ void DeviousDevices::Utils::ForEachReferenceInRange(
         auto* interiorCell = tesSingleton->interiorCell;
         if (interiorCell) {
             interiorCell->ForEachReferenceInRange(originPos, radius,
-                                                  [&](TESObjectREFR& a_ref) { return callback(a_ref); });
+                                                  [&](TESObjectREFR* a_ref) { return a_ref ? callback(*a_ref) : RE::BSContainer::ForEachResult::kContinue; });
         } else {
             if (const auto gridLength = tesSingleton->gridCells ? tesSingleton->gridCells->length : 0; gridLength > 0) {
                 const float yPlus = originPos.y + radius;
@@ -29,7 +29,7 @@ void DeviousDevices::Utils::ForEachReferenceInRange(
                                 if (worldPos.x < xPlus && (worldPos.x + 4096.0f) > xMinus && worldPos.y < yPlus &&
                                     (worldPos.y + 4096.0f) > yMinus) {
                                     cell->ForEachReferenceInRange(
-                                        originPos, radius, [&](TESObjectREFR& a_ref) { return callback(a_ref); });
+                                        originPos, radius, [&](TESObjectREFR* a_ref) { return a_ref ? callback(*a_ref) : RE::BSContainer::ForEachResult::kContinue; });
                                 }
                             }
                         }
@@ -40,7 +40,7 @@ void DeviousDevices::Utils::ForEachReferenceInRange(
             }
         }
     } else {
-        RE::TES::GetSingleton()->ForEachReference([&](RE::TESObjectREFR& a_ref) { return callback(a_ref); });
+        RE::TES::GetSingleton()->ForEachReference([&](RE::TESObjectREFR* a_ref) { return a_ref ? callback(*a_ref) : RE::BSContainer::ForEachResult::kContinue; });
     }
 }
 
